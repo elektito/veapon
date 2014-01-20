@@ -2,4 +2,4 @@ veapon
 ======
 
 Veapon is a toolkit for creating Internet censorship circumvention
-tools.
+tools --well, it's going to be!
