@@ -43,7 +43,7 @@ class Encoder():
             return data
 
         rest = data
-        while rest != '':
+        while rest != b'':
             rest = self.encoders[self.curEncoder].feed(rest)
 
             self.curEncoder += 1
