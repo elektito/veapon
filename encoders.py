@@ -77,9 +77,10 @@ class Encoder():
         else:
             return self.parent.popOutput()
 
-class RequestLineEncoder(Encoder):
-    def __init__(self, verb=None, parent=None):
-        super(RequestLineEncoder, self).__init__(self, parent)
+class HttpRequestLineEncoder(Encoder):
+    class InvalidHttpVerbError(Exception):
+        pass
 
-        httpVerbs = ['GET', 'POST', 'HEAD']
-        self.verb = verb if verb != None else random.choice(httpVerbs)
+    def __init__(self, verb=None, parent=None):
+        super(HttpRequestLineEncoder, self).__init__(parent)
+        self.verb = ''
