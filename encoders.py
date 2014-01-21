@@ -1,8 +1,23 @@
 class Encoder():
     def __init__(self, parent=None):
+        # the parent of this Encoder, or `None` if this is the
+        # parent. the `output` method sends the output to `self.cache`
+        # if this is `None`, otherwise `self.parent.output` is called.
         self.parent = parent
+
+        # generated output is stored in this variable if `self.parent`
+        # is `None`.
         self.cache = b''
+
+        # the list of sub-encoders. Encoder subclasses which use
+        # sub-encoders will populate this list with the sub-encoders
+        # they use. the default implementation of `feed` iterates
+        # through these sub-encoders and feeds input to each encoder
+        # until it is finished.
         self.encoders = []
+
+        # the index of the current sub-encoder in `self.encoders`
+        # being used for encoding.
         self.curEncoder = 0
 
     def feed(self, data):
@@ -61,3 +76,10 @@ class Encoder():
             return ret
         else:
             return self.parent.popOutput()
+
+class RequestLineEncoder(Encoder):
+    def __init__(self, verb=None, parent=None):
+        super(RequestLineEncoder, self).__init__(self, parent)
+
+        httpVerbs = ['GET', 'POST', 'HEAD']
+        self.verb = verb if verb != None else random.choice(httpVerbs)
